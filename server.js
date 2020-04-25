@@ -15,7 +15,7 @@ var adapter = new FileSync('db.json');
 var db = low(adapter);
 
 // Set some defaults (required if your JSON file is empty)
-db.defaults({ books: [] })
+db.defaults({ books: [], users: [] })
   .write()
 
 app.set('view engine', 'pug');
@@ -79,6 +79,61 @@ app.post('/books/update', function(req, res) {
   
   db.get('books').find({ id: id }).assign({ title: req.body.title }).write();
   res.redirect('/books');
+});
+
+//user
+
+app.get('/users', function(req, res) {
+  res.render('users/index', {
+    users: db.get('users').value()
+  });
+});
+
+app.get('/users/search', function(req, res) {
+  var q = req.query.q;
+  var matchedUser = db.get('users').value().filter((user) => {
+    return user.name.toLowerCase().indexOf(q.toLowerCase()) !== -1;
+  });
+  
+  res.render('users/index', {
+    users: matchedUser
+  });
+});
+
+app.get('/users/create', function(req, res) {
+  res.render('users/create');
+});
+
+app.get('/users/:id/delete', function(req, res) {
+  var id = req.params.id;
+  
+  db.get('users').remove({ id: id }).write();
+  
+  res.redirect('/users');
+});
+
+app.get('/users/:id', function(req, res) {
+	var id = req.params.id;
+
+	var user = db.get('users').find({ id: id }).value();
+
+	res.render('users/update', {
+		user: user,
+    id: id
+	});
+});
+
+app.post('/users/create', function(req, res) {
+  req.body.id = shortid.generate();
+  db.get('users').push(req.body).write();
+  res.redirect('/users');
+});
+
+app.post('/users/update', function(req, res) {
+  var id = req.body.id;
+  
+  db.get('users').find({ id: id }).assign({ name: req.body.name }).write();
+  res.redirect('/users');
 });
 
 // listen for requests :)

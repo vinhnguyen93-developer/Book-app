@@ -1,0 +1,7 @@
+h1 Edit name user
+
+form(action="/users/update", method="POST")
+  input(name="id", type="hidden", value=user.id)
+  lable New title
+  input(name="name", type="text", value=user.name)
+  button update

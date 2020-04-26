@@ -26,35 +26,35 @@ router.get('/create', function(req, res) {
   res.render('users/create');
 });
 
-router.get('/:id/delete', function(req, res) {
-  var id = req.params.id;
+router.get('/:userId/delete', function(req, res) {
+  var id = req.params.userId;
   
-  db.get('users').remove({ id: id }).write();
+  db.get('users').remove({ userId: id }).write();
   
   res.redirect('/users');
 });
 
-router.get('/:id', function(req, res) {
-	var id = req.params.id;
+router.get('/:userId', function(req, res) {
+	var id = req.params.userId;
 
-	var user = db.get('users').find({ id: id }).value();
+	var user = db.get('users').find({ userId: id }).value();
 
 	res.render('users/update', {
 		user: user,
-    id: id
+    userId: id
 	});
 });
 
 router.post('/create', function(req, res) {
-  req.body.id = shortid.generate();
+  req.body.userId = shortid.generate();
   db.get('users').push(req.body).write();
   res.redirect('/users');
 });
 
 router.post('/update', function(req, res) {
-  var id = req.body.id;
+  var id = req.body.userId;
   
-  db.get('users').find({ id: id }).assign({ name: req.body.name }).write();
+  db.get('users').find({ userId: id }).assign({ name: req.body.name }).write();
   res.redirect('/users');
 });
 

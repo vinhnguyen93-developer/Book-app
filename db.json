@@ -25,12 +25,24 @@
     {
       "userId": "rHK7sQvVm",
       "bookId": "8NIefqocY",
-      "tranId": "xrnUXYdWW"
+      "tranId": "xrnUXYdWW",
+      "isComplete": true
     },
     {
       "userId": "N8_ilTQ79",
       "bookId": "eoG_Phlp_",
-      "tranId": "WQkwwQfZV"
+      "tranId": "WQkwwQfZV",
+      "isComplete": true
+    },
+    {
+      "userId": "N8_ilTQ79",
+      "bookId": "8NIefqocY",
+      "tranId": "LkovJZT6B"
+    },
+    {
+      "userId": "rHK7sQvVm",
+      "bookId": "eoG_Phlp_",
+      "tranId": "R_Fhe64vi"
     }
   ]
 }

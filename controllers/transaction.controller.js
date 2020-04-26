@@ -12,7 +12,9 @@ module.exports.index = function(req, res) {
       
       return {
         user: user.name,
-        book: book.title
+        book: book.title,
+        tranId: item.tranId,
+        isComplete: item.isComplete
       }
     }
   });
@@ -29,6 +31,20 @@ module.exports.create = function(req, res) {
 
 module.exports.postCreate = function(req, res) {
   req.body.tranId = shortid.generate();
-  db.get('transaction').push(req.body).write();
+  db.get('transaction')
+    .push(req.body)
+    .write();
+  
   res.redirect('/transactions');
 };
+
+module.exports.complete = function(req, res) {
+  var id = req.params.tranId;
+  
+  db.get('transaction')
+    .find({ tranId: id })
+    .set("isComplete", true)
+    .write();
+  
+  res.redirect('/transactions');
+}

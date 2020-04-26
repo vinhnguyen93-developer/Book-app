@@ -1,0 +1,12 @@
+h1 Transaction 
+
+a(href="transactions/create") New a transaction
+
+ul
+  each transaction in transactions
+    li
+      span Name:  
+      span= transaction.user
+      span &nbsp Book borrow: 
+      span= transaction.book
+      

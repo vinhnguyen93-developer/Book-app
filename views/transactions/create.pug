@@ -1,0 +1,18 @@
+h1 Create a new transaction
+
+form(action="/transactions/create", method="POST")
+  lable Choose a user:
+  
+  select(name="userId")
+    each user in users
+      option(name="userId", value=user.userId) #{user.name}
+  span &nbsp
+  
+  lable Choose a book:
+  
+  select(name="bookId")
+    each book in books
+      option(name="bookId", value=book.bookId) #{book.title}
+  span &nbsp
+  
+  button create

@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 
 var userRoute = require('./routes/user.route');
 var bookRoute = require('./routes/book.route');
+var transactionRoute = require('./routes/transaction.route');
 
 var app = express();
 
@@ -27,7 +28,11 @@ app.use('/books', bookRoute);
 //user
 app.use('/users', userRoute);
 
+//transaction
+app.use('/transactions', transactionRoute)
+
 // listen for requests :)
 const listener = app.listen(process.env.PORT, () => {
   console.log("Your app is listening on port " + listener.address().port);
 });
+

@@ -26,7 +26,9 @@ module.exports.create = function(req, res) {
 module.exports.delete = function(req, res) {
   var id = req.params.userId;
   
-  db.get('users').remove({ userId: id }).write();
+  db.get('users')
+    .remove({ userId: id })
+    .write();
   
   res.redirect('/users');
 };
@@ -44,13 +46,21 @@ module.exports.getUpdate = function(req, res) {
 
 module.exports.postCreate = function(req, res) {
   req.body.userId = shortid.generate();
-  db.get('users').push(req.body).write();
+  
+  db.get('users')
+    .push(req.body)
+    .write();
+  
   res.redirect('/users');
 };
 
 module.exports.postUpdate = function(req, res) {
   var id = req.body.userId;
   
-  db.get('users').find({ userId: id }).assign({ name: req.body.name }).write();
+  db.get('users')
+    .find({ userId: id })
+    .assign({ name: req.body.name })
+    .write();
+  
   res.redirect('/users');
 };

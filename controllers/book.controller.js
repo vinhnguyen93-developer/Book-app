@@ -26,7 +26,9 @@ module.exports.create  = function(req, res) {
 module.exports.delete = function(req, res) {
   var bookId = req.params.bookId;
   
-  db.get('books').remove({ bookId: bookId }).write();
+  db.get('books')
+    .remove({ bookId: bookId })
+    .write();
   
   res.redirect('/books');
 };
@@ -44,13 +46,21 @@ module.exports.getUpdate  = function(req, res) {
 
 module.exports.postCreate = function(req, res) {
   req.body.bookId = shortid.generate();
-  db.get('books').push(req.body).write();
+  
+  db.get('books')
+    .push(req.body)
+    .write();
+  
   res.redirect('/books');
 };
 
 module.exports.postUpdate = function(req, res) {
   var bookId = req.body.bookId;
   
-  db.get('books').find({ bookId: bookId }).assign({ title: req.body.title }).write();
+  db.get('books')
+    .find({ bookId: bookId })
+    .assign({ title: req.body.title })
+    .write();
+  
   res.redirect('/books');
 };

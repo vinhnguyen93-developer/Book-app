@@ -5,8 +5,14 @@ a(href="transactions/create") New a transaction
 ul
   each transaction in transactions
     li
-      span Name:  
+      span Borrower:  
       span= transaction.user
-      span &nbsp Book borrow: 
+      br
+      span Book title: 
       span= transaction.book
+      br
+      span Completed:  
+      span= transaction.isComplete ? transaction.isComplete : 'false'
+      br
+      a(href='transactions/'  + transaction.tranId + '/complete') complete
       

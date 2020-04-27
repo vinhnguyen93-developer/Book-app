@@ -1,18 +1,33 @@
-h1 Transaction 
+extends ../layouts/common
 
-a(href="transactions/create") New a transaction
+block content
+  nav(class="navbar navbar-expand-lg navbar-light bg-light")
+    a(class="navbar-brand", href="#")
+      img(src="https://cdn.glitch.com/78c9933a-3930-4ccc-bdbc-28c287ea229e%2Ffavicon.png?v=1587995799390", width="35", height="43", alt="")
 
-ul
-  each transaction in transactions
-    li
-      span Borrower:  
-      span= transaction.user
-      br
-      span Book title: 
-      span= transaction.book
-      br
-      span Completed:  
-      span= transaction.isComplete ? transaction.isComplete : 'false'
-      br
-      a(href='transactions/'  + transaction.tranId + '/complete') complete
+    button(class="navbar-toggler", type="button", data-toggle="collapse", data-target="#navbarNavAltMarkup", aria-controls="navbarNavAltMarkup", aria-expanded="false", aria-label="Toggle navigation")
+      span(class="navbar-toggler-icon")
+    div(class="collapse navbar-collapse", id="navbarNavAltMarkup")
+      div(class="navbar-nav")
+        a(href="/books", class="nav-item nav-link") Book
+        a(href="/users", class="nav-item nav-link") User
+        a(href="/transactions", class="nav-item nav-link") Trainsaction
+
+  h1 Transaction 
+
+  a(href="transactions/create") New a transaction
+
+  ul
+    each transaction in transactions
+      li
+        span Borrower:  
+        span= transaction.user
+        br
+        span Book title: 
+        span= transaction.book
+        br
+        span Completed:  
+        span= transaction.isComplete ? transaction.isComplete : 'false'
+        br
+        a(href='transactions/'  + transaction.tranId + '/complete') complete
       

@@ -1,7 +1,10 @@
-h1 Edit name user
+extends ../layouts/common
 
-form(action="/users/update", method="POST")
-  input(name="userId", type="hidden", value=user.userId)
-  lable New title
-  input(name="name", type="text", value=user.name)
-  button update
+block content   
+  h1 Edit name user
+
+  form(action="/users/update", method="POST")
+    input(name="userId", type="hidden", value=user.userId)
+    lable New title
+    input(name="name", type="text", value=user.name)
+    button update

@@ -1,7 +1,10 @@
-h1 Edit title book
+extends ../layouts/common
 
-form(action="/books/update", method="POST")
-  input(name="bookId", type="hidden", value=book.bookId)
-  lable New title
-  input(name="title", type="text", value=book.title)
-  button update
+block content 
+  h1 Edit title book
+
+  form(action="/books/update", method="POST")
+    input(name="bookId", type="hidden", value=book.bookId)
+    lable New title
+    input(name="title", type="text", value=book.title)
+    button update

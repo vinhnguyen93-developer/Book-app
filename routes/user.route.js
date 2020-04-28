@@ -1,6 +1,7 @@
 var express = require('express');
 
 var controllerUser = require('../controllers/user.controller');
+var validate = require('../validate/user.validate');
 
 var router = express.Router();
 
@@ -14,7 +15,7 @@ router.get('/:userId/delete', controllerUser.delete);
 
 router.get('/:userId', controllerUser.getUpdate);
 
-router.post('/create', controllerUser.postCreate);
+router.post('/create', validate.postCreate, controllerUser.postCreate);
 
 router.post('/update', controllerUser.postUpdate);
 

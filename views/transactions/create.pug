@@ -3,19 +3,16 @@ extends ../layouts/common
 block content  
   h1 Create a new transaction
 
-  form(action="/transactions/create", method="POST")
-    lable User name:
+  form.col-sm-3(action="/transactions/create", method="POST")
+    .form-group
+      lable User name:
+      select.form-control(name="userId")
+        each user in users
+          option(value=user.userId) #{user.name}
+    .form-group
+      lable Book title:
+      select.form-control(name="bookId")
+        each book in books
+          option(value=book.bookId) #{book.title}
 
-    select(name="userId")
-      each user in users
-        option(value=user.userId) #{user.name}
-    span &nbsp
-
-    lable Book title:
-
-    select(name="bookId")
-      each book in books
-        option(value=book.bookId) #{book.title}
-    span &nbsp
-
-    button create
+    button.btn.btn-primary create

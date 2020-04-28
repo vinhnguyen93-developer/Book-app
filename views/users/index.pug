@@ -1,31 +1,25 @@
 extends ../layouts/common
 
 block content
-  nav(class="navbar navbar-expand-lg navbar-light bg-light")
-    a(class="navbar-brand", href="#")
-      img(src="https://cdn.glitch.com/78c9933a-3930-4ccc-bdbc-28c287ea229e%2Ffavicon.png?v=1587995799390", width="35", height="43", alt="")
+  h1
+    span.mr-4 User list
+    a.btn.btn-primary(href="/users/create") New a user
 
-    button(class="navbar-toggler", type="button", data-toggle="collapse", data-target="#navbarNavAltMarkup", aria-controls="navbarNavAltMarkup", aria-expanded="false", aria-label="Toggle navigation")
-      span(class="navbar-toggler-icon")
-    div(class="collapse navbar-collapse", id="navbarNavAltMarkup")
-      div(class="navbar-nav")
-        a(href="/books", class="nav-item nav-link") Book
-        a(href="/users", class="nav-item nav-link") User
-        a(href="/transactions", class="nav-item nav-link") Trainsaction
-        
-  h1 User list
+  .d-flex.align-items-center
+    form.ml-auto.d-flex(action="/users/search", method="GET")
+      input.form-control(type="text", name="q")
+      button.btn.btn-primary.ml-2 search
 
-  a(href="/users/create") New a user
-  form(action="/users/search", method="GET", class="form-inline")
-    div(class="form-group mx-sm-3 mb-2")
-      input(type="text", name="q", class="form-control")
-    button(class="btn btn-primary mb-2") search
-
-  ul
+  table.table
+    tr
+      th Name
+      th Phone
+      th Actions
+      
     each user in users
-      li
-        span= user.name
-        span &nbsp
-        a(href='users/' + user.userId) update
-        span &nbsp
-        a(href='users/' + user.userId + '/delete') delete
+      tr
+        td= user.name
+        td
+        td
+          a.btn.btn-success(href='users/' + user.userId) update
+          a.btn.btn-danger.ml-2(href='users/' + user.userId + '/delete') delete

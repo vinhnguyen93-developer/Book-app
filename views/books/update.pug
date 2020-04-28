@@ -3,8 +3,9 @@ extends ../layouts/common
 block content 
   h1 Edit title book
 
-  form(action="/books/update", method="POST")
-    input(name="bookId", type="hidden", value=book.bookId)
-    lable New title
-    input(name="title", type="text", value=book.title)
-    button update
+  form.d-flex.align-items-center(action="/books/update", method="POST")
+    .col-sm-3
+      input(name="bookId", type="hidden", value=book.bookId)
+      lable New a book title:
+      input.form-control(name="title", type="text", value=book.title)
+    button.btn.btn-primary.mt-4 update

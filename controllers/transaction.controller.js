@@ -41,6 +41,11 @@ module.exports.postCreate = function(req, res) {
 module.exports.complete = function(req, res) {
   var id = req.params.tranId;
   
+  if (!db.get('transaction').find({ tranId: id }).value()) {
+    res.redirect('/transactions');
+    return;
+  }
+  
   db.get('transaction')
     .find({ tranId: id })
     .set("isComplete", true)

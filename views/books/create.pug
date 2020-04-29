@@ -3,11 +3,12 @@ extends ../layouts/common
 block content  
   h1 Create a new book
 
-  formd(action="/books/create", method="POST")
+  form(action="/books/create", method="POST")
     .form-group.col-sm-3
       lable Book title:
       input.form-control(name="title", type="text")
     .form-group.col-sm-3
       label Description:
       input.form-control(name="description", type="text")
+      
     button.btn.btn-primary.ml-3 create

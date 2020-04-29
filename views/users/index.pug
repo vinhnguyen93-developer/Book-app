@@ -13,13 +13,13 @@ block content
   table.table
     tr
       th Name
-      th Phone
+      th Email
       th Actions
       
     each user in users
       tr
         td= user.name
-        td
+        td= user.email
         td
           a.btn.btn-success(href='users/' + user.userId) update
           a.btn.btn-danger.ml-2(href='users/' + user.userId + '/delete') delete

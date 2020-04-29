@@ -13,16 +13,25 @@
   ],
   "users": [
     {
-      "name": "Vinh",
-      "userId": "rHK7sQvVm"
-    },
-    {
       "name": "Luan",
       "userId": "N8_ilTQ79"
     },
     {
       "name": "Tuyen",
       "userId": "E47swqinY"
+    },
+    {
+      "name": "Kim",
+      "email": "vinhxike2404@gmail.com",
+      "userId": "v4iQOj0CR",
+      "password": "123123"
+    },
+    {
+      "password": "123123",
+      "name": "Vinh Nguyen",
+      "email": "dinhvinhbb93@gmail.com",
+      "userId": "oZa0GN8eV",
+      "isAdmin": true
     }
   ],
   "transaction": [
@@ -48,6 +57,12 @@
       "userId": "rHK7sQvVm",
       "bookId": "eoG_Phlp_",
       "tranId": "R_Fhe64vi"
+    },
+    {
+      "userId": "v4iQOj0CR",
+      "bookId": "eoG_Phlp_",
+      "tranId": "aR3PCWGiM"
     }
-  ]
+  ],
+  "count": 7
 }

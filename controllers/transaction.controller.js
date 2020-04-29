@@ -3,23 +3,55 @@ var shortid = require('shortid');
 var db = require('../db');
 
 module.exports.index = function(req, res) {
-  var data = db.get('transaction').value();
+  var data = db.get('transaction').find({userId: req.cookies.userId}).value();
   
-  var transactions = data.map(function (item) {
-    if (item.hasOwnProperty('userId') && item.hasOwnProperty('bookId')) {
-      var user = db.get('users').find({userId: item.userId}).value();
-      var book = db.get('books').find({bookId: item.bookId}).value();
-      
-      return {
-        user: user.name,
-        book: book.title,
-        tranId: item.tranId,
-        isComplete: item.isComplete
+  var dataUser = db.get('users').find({ isAdmin: true }).value();
+  
+  if (dataUser.userId === req.cookies.userId) {
+    var data = db.get('transaction').value();
+    var transactions = data.map(function (item) {
+      if (item.hasOwnProperty('userId') && item.hasOwnProperty('bookId')) {
+        var user = db.get('users').find({userId: item.userId}).value();
+        var book = db.get('books').find({bookId: item.bookId}).value();
+        
+        if (user && book) {
+          return {
+            user: user.name,
+            book: book.title,
+            tranId: item.tranId,
+            isComplete: item.isComplete
+          };
+        } else {
+          return {};
+        }
+        
       }
-    }
-  });
+    });
+    
+    res.render('transactions/index', {
+      transactions
+    });
+    
+    return;
+  }
   
-  res.render('transactions/index', {transactions});
+  if (!data) {
+    res.render('transactions/index', {
+      transactions: [
+        {user: "", book: "", isCopmlete: ""}
+      ]
+    });
+    return;
+  }
+  
+  var user = db.get('users').find({ userId: data.userId }).value();
+  var book = db.get('books').find({ bookId: data.bookId }).value();
+  
+  res.render('transactions/index', {
+    transactions: [
+      { user: user.name, book: book.title, isComplete: data.isComplete }
+    ]
+  });
 };
 
 module.exports.create = function(req, res) {

@@ -5,10 +5,14 @@
 // but feel free to use whatever libraries or frameworks you'd like through `package.json`.
 var express = require("express");
 var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
 
 var userRoute = require('./routes/user.route');
 var bookRoute = require('./routes/book.route');
 var transactionRoute = require('./routes/transaction.route');
+var authRoute = require('./routes/auth.route');
+
+var authMiddleware = require('./middlewares/auth.middleware');
 
 var app = express();
 
@@ -17,6 +21,7 @@ app.set('views', './views');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 app.use(express.static('public'));
 
@@ -31,7 +36,10 @@ app.use('/books', bookRoute);
 app.use('/users', userRoute);
 
 //transaction
-app.use('/transactions', transactionRoute)
+app.use('/transactions', authMiddleware.requireAuth, transactionRoute);
+
+//login
+app.use('/auth', authRoute);
 
 // listen for requests :)
 const listener = app.listen(process.env.PORT, () => {

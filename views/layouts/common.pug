@@ -19,6 +19,9 @@ html
           a(href="/books", class="nav-item nav-link") Book
           a(href="/users", class="nav-item nav-link") User
           a(href="/transactions", class="nav-item nav-link") Trainsaction
+          
+      if user
+        p= user.name
         
     .container.pt-5
     

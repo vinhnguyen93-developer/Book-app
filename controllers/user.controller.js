@@ -1,5 +1,6 @@
 var shortid = require('shortid');
 var md5 = require('md5');
+var bcrypt = require('bcrypt');
 
 var db = require('../db');
 
@@ -21,11 +22,11 @@ module.exports.search = function(req, res) {
 };
 
 module.exports.create = function(req, res) {
-  var password = md5('123123');
+  var hash = bcrypt.hashSync('123123', 5);
   
   res.render('users/create', {
     passwords: [
-      { hashedPassword: password }
+      { hashedPassword: hash }
     ]
   });
 };

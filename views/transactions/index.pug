@@ -12,12 +12,13 @@ block content
       th Book title
       th Completed
       th Actions
-      
-    each transaction in transactions
-      tr
-        td= transaction.user 
-        td= transaction.book
-        td= transaction.isComplete ? 'Have paid' : 'Unpaid'
-        td
-          a.btn.btn-primary(href='transactions/'  + transaction.tranId + '/complete') complete
+    
+    if transactions
+      each transaction in transactions
+        tr
+          td= transaction.user 
+          td= transaction.book
+          td= transaction.isComplete ? 'Have paid' : 'Unpaid'
+          td
+            a.btn.btn-primary(href='transactions/'  + transaction.tranId + '/complete') complete
       

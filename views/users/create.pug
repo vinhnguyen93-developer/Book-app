@@ -8,14 +8,14 @@ block content
       .alert.alert-danger.col-sm-3= error
 
   form(action="/users/create", method="POST")
-
-    .form-group.col-sm-4
-      input(name="password", type="hidden", value="123123")
-    .form-group.col-sm-4
-      lable(for="name") Name:
-      input#name.form-control(name="name", type="text", placeholder="Your name...", value=values ? values.name : '')
-    .form-group.col-sm-4
-      lable(for="email") Email:
-      input#email.form-control(name="email", type="text", placeholder="Your email...", value=values ? values.email : '')
+    each password in passwords
+      .form-group.col-sm-4
+        input(name="password", type="hidden", value=password.hashedPassword)
+      .form-group.col-sm-4
+        lable(for="name") Name:
+        input#name.form-control(name="name", type="text", placeholder="Your name...", value=values ? values.name : '')
+      .form-group.col-sm-4
+        lable(for="email") Email:
+        input#email.form-control(name="email", type="text", placeholder="Your email...", value=values ? values.email : '')
 
     button.btn.btn-primary.ml-3 create

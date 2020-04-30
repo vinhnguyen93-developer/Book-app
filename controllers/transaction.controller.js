@@ -40,11 +40,7 @@ module.exports.index = function(req, res) {
   
   //if data == undefind
   if (!data) {
-    res.render('transactions/index', {
-      transactions: [
-        {user: "", book: "", isCopmlete: ""}
-      ]
-    });
+    res.render('transactions/index');
     return;
   }
   

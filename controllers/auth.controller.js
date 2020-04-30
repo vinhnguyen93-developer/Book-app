@@ -17,7 +17,8 @@ module.exports.postLogin = function(req, res) {
       errors: [
         'You have entered too many wrong attempts.'
       ]
-    })
+    });
+    return;
   }
   
   if (!user) {

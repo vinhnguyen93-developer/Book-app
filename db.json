@@ -26,6 +26,13 @@
       "email": "dinhvinhbb93@gmail.com",
       "userId": "mTUYjJBdS",
       "isAdmin": true
+    },
+    {
+      "wrongLoginCount": "0",
+      "password": "$2b$05$2bNZb/VsDVE6BcJWsbjBDu13tO3zkzqju0l2Dl.1xqOruzop9wp.K",
+      "name": "Thien Kim",
+      "email": "vinhxike2404@gmail.com",
+      "userId": "IQIpZUClh"
     }
   ],
   "transaction": [
@@ -33,6 +40,11 @@
       "userId": "_Viw3jt4V",
       "bookId": "8NIefqocY",
       "tranId": "Q8YiWI6ZA"
+    },
+    {
+      "userId": "IQIpZUClh",
+      "bookId": "eoG_Phlp_",
+      "tranId": "9BKKGdLJ4"
     }
   ],
   "count": 0

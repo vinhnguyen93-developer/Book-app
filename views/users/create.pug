@@ -10,6 +10,8 @@ block content
   form(action="/users/create", method="POST")
     each password in passwords
       .form-group.col-sm-4
+        input(name="wrongLoginCount", type="hidden", value=0)
+      .form-group.col-sm-4
         input(name="password", type="hidden", value=password.hashedPassword)
       .form-group.col-sm-4
         lable(for="name") Name:

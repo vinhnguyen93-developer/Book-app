@@ -13,62 +13,27 @@
   ],
   "users": [
     {
-      "name": "Luan",
-      "userId": "N8_ilTQ79"
-    },
-    {
-      "name": "Tuyen",
-      "userId": "E47swqinY"
-    },
-    {
-      "name": "Kim",
-      "email": "vinhxike2404@gmail.com",
-      "userId": "v4iQOj0CR",
-      "password": "4297f44b13955235245b2497399d7a93"
-    },
-    {
-      "password": "4297f44b13955235245b2497399d7a93",
-      "name": "Vinh Nguyen",
-      "email": "dinhvinhbb93@gmail.com",
-      "userId": "oZa0GN8eV",
-      "isAdmin": true
-    },
-    {
-      "password": "4297f44b13955235245b2497399d7a93",
+      "wrongLoginCount": 5,
+      "password": "$2b$05$vGHIL1jB8AirkTYURObXmOes/kf/QaSCEnY7v9vsT2jxUmGF3mQni",
       "name": "Quan",
       "email": "info@gmail.com",
-      "userId": "joEza3t37"
+      "userId": "_Viw3jt4V"
+    },
+    {
+      "wrongLoginCount": "0",
+      "password": "$2b$05$Xh/sqlOiwASU0VolOvvmoOA8r7.cux0ACQIny4bUR.qymTtMUK.92",
+      "name": "Vinh Nguyen",
+      "email": "dinhvinhbb93@gmail.com",
+      "userId": "mTUYjJBdS",
+      "isAdmin": true
     }
   ],
   "transaction": [
     {
-      "userId": "rHK7sQvVm",
+      "userId": "_Viw3jt4V",
       "bookId": "8NIefqocY",
-      "tranId": "xrnUXYdWW",
-      "isComplete": true
-    },
-    {
-      "userId": "N8_ilTQ79",
-      "bookId": "eoG_Phlp_",
-      "tranId": "WQkwwQfZV",
-      "isComplete": true
-    },
-    {
-      "userId": "N8_ilTQ79",
-      "bookId": "8NIefqocY",
-      "tranId": "LkovJZT6B",
-      "isComplete": true
-    },
-    {
-      "userId": "rHK7sQvVm",
-      "bookId": "eoG_Phlp_",
-      "tranId": "R_Fhe64vi"
-    },
-    {
-      "userId": "v4iQOj0CR",
-      "bookId": "eoG_Phlp_",
-      "tranId": "aR3PCWGiM"
+      "tranId": "Q8YiWI6ZA"
     }
   ],
-  "count": 7
+  "count": 0
 }

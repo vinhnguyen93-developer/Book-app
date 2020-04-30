@@ -1,4 +1,5 @@
 var shortid = require('shortid');
+var md5 = require('md5');
 
 var db = require('../db');
 
@@ -20,7 +21,13 @@ module.exports.search = function(req, res) {
 };
 
 module.exports.create = function(req, res) {
-  res.render('users/create');
+  var password = md5('123123');
+  
+  res.render('users/create', {
+    passwords: [
+      { hashedPassword: password }
+    ]
+  });
 };
 
 module.exports.delete = function(req, res) {

@@ -24,14 +24,20 @@
       "name": "Kim",
       "email": "vinhxike2404@gmail.com",
       "userId": "v4iQOj0CR",
-      "password": "123123"
+      "password": "4297f44b13955235245b2497399d7a93"
     },
     {
-      "password": "123123",
+      "password": "4297f44b13955235245b2497399d7a93",
       "name": "Vinh Nguyen",
       "email": "dinhvinhbb93@gmail.com",
       "userId": "oZa0GN8eV",
       "isAdmin": true
+    },
+    {
+      "password": "4297f44b13955235245b2497399d7a93",
+      "name": "Quan",
+      "email": "info@gmail.com",
+      "userId": "joEza3t37"
     }
   ],
   "transaction": [

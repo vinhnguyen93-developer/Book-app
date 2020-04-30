@@ -3,13 +3,13 @@ var shortid = require('shortid');
 var db = require('../db');
 
 module.exports.index = function(req, res) {
-  var data = db.get('transaction').find({userId: req.cookies.userId}).value();
+  var data = db.get('transaction').find({userId: req.signedCookies.userId}).value();
   
   var dataUser = db.get('users').find({ isAdmin: true }).value();
   
   //if dataUser === true 
   if (dataUser) {
-    if (dataUser.userId === req.cookies.userId) {
+    if (dataUser.userId === req.signedCookies.userId) {
       var data = db.get('transaction').value();
       var transactions = data.map(function (item) {
         if (item.hasOwnProperty('userId') && item.hasOwnProperty('bookId')) {

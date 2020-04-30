@@ -34,13 +34,13 @@ module.exports.postLogin = function(req, res) {
   var hashedPassword = bcrypt.compareSync(password, user.password);
   
   if (hashedPassword === false) {
-    var user = db.get('users').find({ userId: req.cookies.userId }).value();
+    var user = db.get('users').find({ userId: req.signedCookies.userId }).value();
     var count = parseInt(user.wrongLoginCount);
     
     count++;
     
     db.get('users')
-      .find({ userId: req.cookies.userId })
+      .find({ userId: req.signedCookies.userId })
       .assign({ wrongLoginCount: count })
       .write();
   
@@ -53,6 +53,8 @@ module.exports.postLogin = function(req, res) {
     return;
   }
   
-  res.cookie('userId', user.userId);
+  res.cookie('userId', user.userId, {
+    signed: true
+  });
   res.redirect('/transactions');
 };

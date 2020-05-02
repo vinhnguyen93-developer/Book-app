@@ -1,5 +1,8 @@
 var db = require('../db');
+
 var bcrypt = require('bcrypt');
+var sgMail = require('@sendgrid/mail');
+
 
 module.exports.login = function(req, res) {
   res.render('auth/login');
@@ -13,6 +16,26 @@ module.exports.postLogin = function(req, res) {
   
   //if user input wrong password > 3
   if (user.wrongLoginCount > 3) {
+    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
+    var msg = {
+      to: user.email,
+      from: 'dinhvinhbb93@gmail.com',
+      subject: 'Login warning',
+      text: 'Your account has logged in the wrong password more than three times.',
+      html: '<strong>Your account has logged in the wrong password more than three times.</strong>',
+    };
+    
+    sgMail
+      .send(msg)
+      .then(() => {}, error => {
+        console.error(error);
+
+        if (error.response) {
+          console.error(error.response.body)
+        }
+      });
+
     res.render('auth/login', {
       errors: [
         'You have entered too many wrong attempts.'

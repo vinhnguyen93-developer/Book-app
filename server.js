@@ -3,6 +3,8 @@
 
 // we've started you off with Express (https://expressjs.com/)
 // but feel free to use whatever libraries or frameworks you'd like through `package.json`.
+require('dotenv').config();
+
 var express = require("express");
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
@@ -21,7 +23,7 @@ app.set('views', './views');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieParser('jfwebwbkeu4to4it4'));
+app.use(cookieParser(process.env.SESSION_SECRET));
 
 app.use(express.static('public'));
 
@@ -30,10 +32,10 @@ app.get('/', function(req, res) {
 });
 
 //book
-app.use('/books', bookRoute);
+app.use('/books', authMiddleware.requireAuth, bookRoute);
 
 //user
-app.use('/users', userRoute);
+app.use('/users', authMiddleware.requireAuth, userRoute);
 
 //transaction
 app.use('/transactions', authMiddleware.requireAuth, transactionRoute);

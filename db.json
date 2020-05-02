@@ -9,11 +9,6 @@
       "title": "cha giau cha ngheo",
       "description": "cau be chan cuu",
       "bookId": "eoG_Phlp_"
-    },
-    {
-      "title": "Journey To The East",
-      "description": "Braid",
-      "bookId": "BryCOsq6b"
     }
   ],
   "users": [
@@ -38,6 +33,13 @@
       "name": "Thien Kim",
       "email": "vinhxike2404@gmail.com",
       "userId": "IQIpZUClh"
+    },
+    {
+      "wrongLoginCount": "0",
+      "password": "$2b$05$etxaOxOHEzLb9aRx18AF9uc.D6gram9YMicrSLwwzPPnG5T3zYZ.6",
+      "name": "Phan Thong",
+      "email": "phanthong110@gmail.com",
+      "userId": "UgOkUajUY"
     }
   ],
   "transaction": [
@@ -50,22 +52,6 @@
       "userId": "IQIpZUClh",
       "bookId": "eoG_Phlp_",
       "tranId": "9BKKGdLJ4"
-    },
-    {
-      "userId": "IQIpZUClh",
-      "bookId": "BryCOsq6b",
-      "tranId": "2Cc9ngBBC"
-    },
-    {
-      "userId": "IQIpZUClh",
-      "bookId": "eoG_Phlp_",
-      "tranId": "-eejJ0UBu"
-    },
-    {
-      "userId": "mTUYjJBdS",
-      "bookId": "8NIefqocY",
-      "tranId": "hh0FTgf7T"
     }
-  ],
-  "count": 0
+  ]
 }

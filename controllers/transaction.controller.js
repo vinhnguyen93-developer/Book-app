@@ -3,9 +3,22 @@ var shortid = require('shortid');
 var db = require('../db');
 
 module.exports.index = function(req, res) {
-  var data = db.get('transaction').find({userId: req.signedCookies.userId}).value();
+  var data = db.get('transaction').filter({userId: req.signedCookies.userId}).value();
   
   var dataUser = db.get('users').find({ isAdmin: true }).value();
+  
+  //pagintion
+  var page = req.query.page ? parseInt(req.query.page) : 1;
+  var perPage = 5;
+
+  var start = (page - 1) * perPage;
+  var end = page * perPage; 
+  
+  if (data) { 
+    var lengthPage = Math.ceil(data.length / perPage);
+  } else {
+    var lengthPage = Math.ceil(dataUser.length / perPage);
+  }
   
   //if dataUser === true 
   if (dataUser) {
@@ -29,9 +42,13 @@ module.exports.index = function(req, res) {
 
         }
       });
+      
+      transactions = transactions.slice(start, end);
 
       res.render('transactions/index', {
-        transactions
+        transactions,
+        page,
+        lengthPage
       });
 
       return;
@@ -44,13 +61,25 @@ module.exports.index = function(req, res) {
     return;
   }
   
-  var user = db.get('users').find({ userId: data.userId }).value();
-  var book = db.get('books').find({ bookId: data.bookId }).value();
+  var transactions = data.map(function(item) {
+    if(item.hasOwnProperty('userId') && item.hasOwnProperty('bookId')) {
+      var user = db.get('users').find({userId: item.userId}).value();
+      var book = db.get('books').find({bookId: item.bookId}).value();
+      return {
+        user: user.name,
+        book: book.title,
+        tranId: item.tranId,
+        isComplete: item.isComplete
+      };
+    }
+  });
+  
+  transactions = transactions.slice(start, end);
   
   res.render('transactions/index', {
-    transactions: [
-      { user: user.name, book: book.title, isComplete: data.isComplete }
-    ]
+    transactions,
+    page,
+    lengthPage
   });
 };
 

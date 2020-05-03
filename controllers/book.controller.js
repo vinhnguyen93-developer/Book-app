@@ -3,8 +3,19 @@ var shortid = require('shortid');
 var db = require('../db');
 
 module.exports.index = function(req, res) {
+  var books = db.get('books').value();
+  
+  var page = req.query.page ? parseInt(req.query.page) : 1;
+  var perPage = 5;
+  
+  var start = (page - 1) * perPage;
+  var end = page * perPage;  
+  var lengthPage = Math.ceil(books.length / perPage);
+  
   res.render('books/index', {
-    books: db.get('books').value()
+    books: books.slice(start, end),
+    page,
+    lengthPage
   });
 };
 

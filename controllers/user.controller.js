@@ -1,7 +1,14 @@
 var shortid = require('shortid');
 var bcrypt = require('bcrypt');
+var cloudinary = require('cloudinary').v2;
 
 var db = require('../db');
+
+cloudinary.config({ 
+  cloud_name: process.env.CLOUND_NAME, 
+  api_key: process.env.API_KEY, 
+  api_secret: process.env.API_SECRET 
+});
 
 module.exports.index = function(req, res) {
   var users = db.get('users').value();
@@ -49,6 +56,10 @@ module.exports.delete = function(req, res) {
   res.redirect('/users');
 };
 
+module.exports.profile = function(req, res) {
+  res.render('users/profile');
+};
+
 module.exports.getUpdate = function(req, res) {
 	var id = req.params.userId;
 
@@ -79,4 +90,30 @@ module.exports.postUpdate = function(req, res) {
     .write();
   
   res.redirect('/users');
+};
+
+module.exports.postAvatar = async function(req, res) {
+  var id = req.body.userId;
+  
+  var user = db
+    .get('users')
+    .find({ userId: id})
+    .value();
+  
+  var file = await cloudinary.uploader.upload(req.file.path, 
+    function(error, result) {console.log(result, error)});
+  
+  if (!user.avatar) {
+    db.get('users')
+      .find({ userId: id })
+      .set('avatar', file.url)
+      .write();
+  } else {
+    db.get('users')
+      .find({ userId: id })
+      .assign({ avatar: file.url })
+      .write();
+  }
+  
+  res.redirect('/users/profile');
 };

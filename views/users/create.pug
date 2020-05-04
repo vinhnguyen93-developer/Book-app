@@ -7,7 +7,7 @@ block content
     each error in errors
       .alert.alert-danger.col-sm-3= error
 
-  form(action="/users/create", method="POST")
+  form(action="/users/create", method="POST", enctype="multipart/form-data")
     .form-group.col-sm-4
       input(name="wrongLoginCount", type="hidden", value=0)
     .form-group.col-sm-4

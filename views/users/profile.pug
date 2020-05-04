@@ -1,0 +1,27 @@
+extends ../layouts/common
+
+block content
+
+  h2 Personal information
+  
+  .d-flex.my-2
+    if user.avatar
+      img.rounded-circle(src=user.avatar, width="100")
+    else
+      img.rounded-circle(src='https://res.cloudinary.com/vinhnguyen93/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1588557922/samples/bike.jpg', width="100")
+    
+  .profile
+    .item
+      b Name: 
+      span.ml-3= user.name
+    .item
+      b Email: 
+      span.ml-3= user.email
+      
+  .my-2
+    form(action="/users/profile/avatar", method="POST", enctype="multipart/form-data")
+      .form-group.col-sm-4
+        input(name="userId", type="hidden", value=user.userId)
+        lable(for="avatar") Avatar:
+        input#avatar.form-control-file(name="avatar", type="file")
+      button.btn.btn-primary update avatar

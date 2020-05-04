@@ -12,16 +12,22 @@ block content
 
   table.table
     tr
+      th Avatar
       th Name
       th Email
       th Actions
       
     each user in users
       tr
+        td
+          if user.avatar
+            img.rounded-circle(src=user.avatar, width="32")
+          else
+            img.rounded-circle(src='https://res.cloudinary.com/vinhnguyen93/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1588557922/samples/bike.jpg', width="32")
         td= user.name
         td= user.email
         td
-          a.btn.btn-success(href='users/' + user.userId) update
+          a.btn.btn-success(href='users/' + user.userId + '/update') update
           a.btn.btn-danger.ml-2(href='users/' + user.userId + '/delete') delete
           
   nav

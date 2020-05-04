@@ -30,7 +30,8 @@
       "name": "Vinh Nguyen",
       "email": "dinhvinhbb93@gmail.com",
       "userId": "mTUYjJBdS",
-      "isAdmin": true
+      "isAdmin": true,
+      "avatar": "http://res.cloudinary.com/vinhnguyen93/image/upload/v1588586401/muxpsnkxabklhyj5bkob.jpg"
     },
     {
       "wrongLoginCount": "0",
@@ -66,6 +67,14 @@
       "name": "Dat Nguyen",
       "email": "datthazza@gmail.com",
       "userId": "k4IOIEFtW"
+    },
+    {
+      "wrongLoginCount": "0",
+      "password": "$2b$05$EQilmMzmpJHOyFnvggo7B.YPdcb.lDGGnJoxQTLkAAkWDQ1ibqdDm",
+      "name": "Tom",
+      "email": "vinhke93@gmail.com",
+      "userId": "CeZ8jGvoC",
+      "avatar": "uploads/74a9a04fcdb847cb9f3e44bae796b0ae"
     }
   ],
   "transaction": [

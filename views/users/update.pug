@@ -1,11 +1,11 @@
 extends ../layouts/common
 
 block content   
-  h1 Edit name user
+  h1 Update name user
 
   .d-flex.align-items-center
     form.d-flex(action="/users/update", method="POST")
       input(name="userId", type="hidden", value=user.userId)
-      lable.sr-only New title
+      lable.sr-only New name
       input.form-control(name="name", type="text", value=user.name)
       button.btn.btn-primary.ml-2 update

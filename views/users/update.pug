@@ -5,7 +5,7 @@ block content
 
   .d-flex.align-items-center
     form.d-flex(action="/users/update", method="POST")
-      input(name="userId", type="hidden", value=user.userId)
+      input(name="id", type="hidden", value=user.id)
       lable.sr-only New name
       input.form-control(name="name", type="text", value=user.name)
       button.btn.btn-primary.ml-2 update

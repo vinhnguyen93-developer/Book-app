@@ -23,14 +23,14 @@ block content
           if user.avatar
             img.rounded-circle(src=user.avatar, width="32")
           else
-            img.rounded-circle(src='https://res.cloudinary.com/vinhnguyen93/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1588557922/samples/bike.jpg', width="32")
+            img.rounded-circle(src='https://res.cloudinary.com/vinhnguyen93/image/upload/w_1000,ar_1:1,c_fill,g_auto,e_art:hokusai/v1588557922/samples/bike.jpg', width="32")
         td= user.name
         td= user.email
         td
-          a.btn.btn-success(href='users/' + user.userId + '/update') update
-          a.btn.btn-danger.ml-2(href='users/' + user.userId + '/delete') delete
+          a.btn.btn-success(href='users/' + user.id + '/update') update
+          a.btn.btn-danger.ml-2(href='users/' + user.id + '/delete', class= users.length > 1 ? '' : 'd-none') delete
           
-  nav
+  nav(class= users.length > 1 ? '' : 'd-none')
     ul.pagination.justify-content-center
       li.page-item(class= page === 1 ? 'disabled' : '')
         a.page-link(href='/users?page=' + (page - 1)) &laquo

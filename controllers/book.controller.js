@@ -1,10 +1,17 @@
-var shortid = require('shortid');
+var cloudinary = require('cloudinary').v2;
 
-var db = require('../db');
+var Book = require('../models/book.model');
+var User = require('../models/user.model');
 
-module.exports.index = function(req, res) {
-  var books = db.get('books').value();
-  
+cloudinary.config({ 
+  cloud_name: process.env.CLOUND_NAME, 
+  api_key: process.env.API_KEY, 
+  api_secret: process.env.API_SECRET 
+});
+
+module.exports.index = async function(req, res) {
+  var books = await Book.find();
+  var id = req.signedCookies.userId;
   var page = req.query.page ? parseInt(req.query.page) : 1;
   var perPage = 5;
   
@@ -12,16 +19,27 @@ module.exports.index = function(req, res) {
   var end = page * perPage;  
   var lengthPage = Math.ceil(books.length / perPage);
   
+  var user = await User.findById(id);
+
+  //var data = db.get('sessions').find({ id: req.signedCookies.sessionId}).get('cart').value();
+  
+  // if (data) {
+  //   res.locals.count = Object.values(data).reduce((sum, item) => sum + item, 0);
+  // }
+  
   res.render('books/index', {
     books: books.slice(start, end),
     page,
-    lengthPage
+    lengthPage,
+    user: user
   });
 };
 
-module.exports.search = function(req, res) {
+module.exports.search = async function(req, res) {
   var q = req.query.q;
-  var matchedBook = db.get('books').value().filter((book) => {
+  var books = await Book.find();
+  
+  var matchedBook = books.filter((book) => {
     return book.title.toLowerCase().indexOf(q.toLowerCase()) !== -1;
   });
   
@@ -34,44 +52,46 @@ module.exports.create  = function(req, res) {
   res.render('books/create');
 };
 
-module.exports.delete = function(req, res) {
-  var bookId = req.params.bookId;
+module.exports.delete = async function(req, res) {
+  var id = req.params.id;
   
-  db.get('books')
-    .remove({ bookId: bookId })
-    .write();
+  await Book.findByIdAndDelete(id, {});
   
   res.redirect('/books');
 };
 
-module.exports.getUpdate  = function(req, res) {
-	var bookId = req.params.bookId;
+module.exports.getUpdate  = async function(req, res) {
+	var id = req.params.id;
 
-	var book = db.get('books').find({ bookId: bookId }).value();
+	var book = await Book.findById(id);
 
 	res.render('books/update', {
 		book: book,
-    bookId: bookId
+    id: id
 	});
 };
 
-module.exports.postCreate = function(req, res) {
-  req.body.bookId = shortid.generate();
+module.exports.postCreate = async function(req, res) {
   
-  db.get('books')
-    .push(req.body)
-    .write();
+  await Book.create({
+    title: req.body.title,
+    description: req.body.description
+  });
   
   res.redirect('/books');
 };
 
-module.exports.postUpdate = function(req, res) {
-  var bookId = req.body.bookId;
+module.exports.postUpdate = async function(req, res) {
+  var id = req.body.id;
+  var book = await Book.findById(id);
   
-  db.get('books')
-    .find({ bookId: bookId })
-    .assign({ title: req.body.title })
-    .write();
+  var file = await cloudinary.uploader.upload(req.file.path, 
+    function(error, result) {console.log(result, error)});
+  
+  await Book.findByIdAndUpdate(id, {
+    title: req.body.title,
+    bookCover: file.url
+  });
   
   res.redirect('/books');
 };

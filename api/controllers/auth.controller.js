@@ -1,11 +1,11 @@
-var User = require('../models/user.model');
+var User = require('../../models/user.model');
 
 var bcrypt = require('bcrypt');
 var sgMail = require('@sendgrid/mail');
 
 
 module.exports.login = function(req, res) {
-  res.render('auth/login');
+  res.json();
 };
 
 module.exports.postLogin = async function(req, res) {
@@ -15,12 +15,7 @@ module.exports.postLogin = async function(req, res) {
   var user = await User.findOne({ email: email });
   
   if (!user) {
-    res.render('auth/login', {
-      errors: [
-        'User dose not exists.'
-      ],
-      values: req.body
-    });
+    res.json({ 'error': 'User dose not exists.'})
     return;
   }
   
@@ -46,11 +41,7 @@ module.exports.postLogin = async function(req, res) {
         }
       });
 
-    res.render('auth/login', {
-      errors: [
-        'You have entered too many wrong attempts.'
-      ]
-    });
+    res.json({ 'error': 'You have entered too many wrong attempts.' });
     return;
   }
   
@@ -66,12 +57,7 @@ module.exports.postLogin = async function(req, res) {
         { wrongLoginCount: count }
       );
 
-      res.render('auth/login', {
-        errors: [
-          'Wrong password.'
-        ],
-        values: req.body
-      });
+      res.json({ 'error': 'Wrong password.' });
       return;
     } else {
       var user = await User.findOne({ email: email });

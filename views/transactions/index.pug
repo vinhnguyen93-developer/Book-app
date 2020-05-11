@@ -20,7 +20,7 @@ block content
           td= transaction.book
           td= transaction.isComplete ? 'Have paid' : 'Unpaid'
           td
-            a.btn.btn-primary(href='transactions/'  + transaction.tranId + '/complete') complete
+            a.btn.btn-primary(href='transactions/'  + transaction.id + '/complete') complete
      
   nav
     ul.pagination.justify-content-center

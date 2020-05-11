@@ -21,7 +21,7 @@ block content
   .my-2
     form(action="/users/profile/avatar", method="POST", enctype="multipart/form-data")
       .form-group.col-sm-4
-        input(name="userId", type="hidden", value=user.userId)
+        input(name="id", type="hidden", value=user.idd)
         lable(for="avatar") Avatar:
         input#avatar.form-control-file(name="avatar", type="file")
       button.btn.btn-primary update avatar

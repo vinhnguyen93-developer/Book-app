@@ -4,7 +4,10 @@ block content
   
   h1 
     span.mr-4 Book list
-    a.btn.btn-primary(href="/books/create") New a book
+    a.btn.btn-primary(href="/books/create", class= user ? (user.isAdmin ? '' : 'd-none') : 'd-none') New a book
+  
+  button.btn.btn-primary(type="button") Cart
+    span.ml-2.badge.badge-danger #{ count }
 
   
   .d-flex.align-items-center
@@ -12,17 +15,39 @@ block content
       input.form-control(type="text", name="q")
       button.btn.btn-primary.ml-2 search
 
-  table.table
+  table.table(class= user  ? (user.isAdmin ? '' : 'd-none') : 'd-none')
     tr
+      th Book cover
       th Title
       th Actions
       
     each book in books
       tr
+        if book.bookCover
+          td
+            img.rounded(src=book.bookCover, width="64")
+        else 
+          td
+            img.rounded(src='https://res.cloudinary.com/vinhnguyen93/image/upload/v1588557927/samples/food/spices.jpg', width="64")
         td= book.title
         td
-          a.btn.btn-success(href='books/' + book.bookId) update
-          a.btn.btn-danger.ml-2(href='books/' + book.bookId + '/delete') delete
+          a.btn.btn-success(href='books/' + book.id + '/update') update
+          a.btn.btn-danger.ml-2(href='books/' + book.id + '/delete') delete
+          
+  
+  .row(class= user ? (user.isAdmin ? 'd-none' : '') : '')
+    each book in books
+      .col-sm-6.col-md-4.col-lg-3
+        .card.mb-3
+          if book.bookCover
+              img.card-img-top(src=book.bookCover, height="200")
+          else 
+              img.card-img-top(src='https://res.cloudinary.com/vinhnguyen93/image/upload/v1588557927/samples/food/spices.jpg', height="200")
+          .card-body
+            h5.card-title= book.title
+            p.card-text= book.description
+            a.btn.btn-primary(href='/cart/add/' + book.id) add to cart
+          
           
   nav
     ul.pagination.justify-content-center

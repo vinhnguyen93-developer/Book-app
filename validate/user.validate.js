@@ -1,19 +1,20 @@
-var db = require('../db');
+var User = require('../models/user.model');
 
-module.exports.postCreate = function(req, res, next) {
-  var email = db.get('users').find({ email: req.body.email }).value();
+module.exports.postCreate = async function(req, res, next) {
+  var bodyEmail = req.body.email;
+  var name = req.body.name;
+  var email = await User.findOne({ email: email });
   var errors = [];
+  console.log(name);
   
-  if (!req.body.name) {
+  if (name === 'undefined') {
     errors.push('Name is required.');
+  } else if (name.length > 30) {
+    errors.push('Your name is too long.')
   }
   
-  if (!req.body.email) {
+  if (bodyEmail === 'undefined') {
     errors.push('Email is required.');
-  }
-  
-  if (req.body.name.length > 30) {
-    errors.push('The name is too long.');
   }
   
   if (email) {

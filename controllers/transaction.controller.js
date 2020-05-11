@@ -1,11 +1,11 @@
-var shortid = require('shortid');
+var Transaction = require('../models/transaction.model');
+var Session = require('../models/session.model');
+var User = require('../models/user.model');
+var Book = require('../models/book.model');
 
-var db = require('../db');
-
-module.exports.index = function(req, res) {
-  var data = db.get('transaction').filter({userId: req.signedCookies.userId}).value();
-  
-  var dataUser = db.get('users').find({ isAdmin: true }).value();
+module.exports.index = async function(req, res) {
+  var data = await Transaction.find({ userId: req.signedCookies.userId });
+  var dataUser = await User.findById(req.signedCookies.userId);
   
   //pagintion
   var page = req.query.page ? parseInt(req.query.page) : 1;
@@ -20,20 +20,26 @@ module.exports.index = function(req, res) {
     var lengthPage = Math.ceil(dataUser.length / perPage);
   }
   
+  //if data == undefind
+  if (!data) {
+    res.render('transactions/index');
+    return;
+  }
+  
   //if dataUser === true 
-  if (dataUser) {
+  if (dataUser.isAdmin === true) {
     if (dataUser.userId === req.signedCookies.userId) {
-      var data = db.get('transaction').value();
-      var transactions = data.map(function (item) {
+      var datas = await Transaction.find();
+      var transactions = datas.map(async function (item) {
         if (item.hasOwnProperty('userId') && item.hasOwnProperty('bookId')) {
-          var user = db.get('users').find({userId: item.userId}).value();
-          var book = db.get('books').find({bookId: item.bookId}).value();
+          var user = await User.findOne({ id: item.userId });
+          var book = await Book.findOne({ id: item.bookId });
 
           if (user && book) {
             return {
               user: user.name,
               book: book.title,
-              tranId: item.tranId,
+              tranId: item.id,
               isComplete: item.isComplete
             };
           } else {
@@ -55,20 +61,14 @@ module.exports.index = function(req, res) {
     }
   }
   
-  //if data == undefind
-  if (!data) {
-    res.render('transactions/index');
-    return;
-  }
-  
-  var transactions = data.map(function(item) {
+  var transactions = data.map(async function(item) {
     if(item.hasOwnProperty('userId') && item.hasOwnProperty('bookId')) {
-      var user = db.get('users').find({userId: item.userId}).value();
-      var book = db.get('books').find({bookId: item.bookId}).value();
+      var user = await User.findById(item.userId);
+      var book = await Book.findById(item.bookId);
       return {
         user: user.name,
         book: book.title,
-        tranId: item.tranId,
+        tranId: item.id,
         isComplete: item.isComplete
       };
     }
@@ -83,34 +83,60 @@ module.exports.index = function(req, res) {
   });
 };
 
-module.exports.create = function(req, res) {
+module.exports.create = async function(req, res) {
+  var user = await User.find();
+  var book = await Book.find();
+  
   res.render('transactions/create', {
-    books: db.get('books').value(),
-    users: db.get('users').value()
+    books: book,
+    users: user
   });
 };
 
-module.exports.postCreate = function(req, res) {
-  req.body.tranId = shortid.generate();
-  db.get('transaction')
-    .push(req.body)
-    .write();
-  
-  res.redirect('/transactions');
+module.exports.postCreate = async function(req, res) {
+  var session = await Session.findOne({ id: req.signedCookies.sessionId });
+
+  if (session) {
+    for (var book in session.cart) {
+      for (var i = 0; i < session.cart[book]; i++) {
+        await Transaction.create({
+          bookId: book,
+          userId: req.signedCookies.userId
+        });
+      }
+    }
+    
+    await Session.findOneAndUpdate(
+      { id: req.signedCookies.sessionid },
+      { cart: {} }
+    );
+
+    res.redirect("/transactions");
+    return;
+  } else {
+
+    await Transaction.create({
+      bookId: req.body.bookId,
+      userId: req.body.userId,
+      isComplete: false
+    });
+  }
+
+  res.redirect("back");
 };
 
-module.exports.complete = function(req, res) {
-  var id = req.params.tranId;
+module.exports.complete = async function(req, res) {
+  var id = req.params.id;
+  var transaction = await Transaction.findById(id);
   
-  if (!db.get('transaction').find({ tranId: id }).value()) {
+  if (!transaction) {
     res.redirect('/transactions');
     return;
   }
   
-  db.get('transaction')
-    .find({ tranId: id })
-    .set("isComplete", true)
-    .write();
+  await Transaction.findByIdAndUpdate(id, { 
+    isComplete: true
+  });
   
   res.redirect('/transactions');
 }

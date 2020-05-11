@@ -14,9 +14,9 @@ router.get("/search", controllerUser.search);
 
 router.get("/create", controllerUser.create);
 
-router.get("/:userId/delete", controllerUser.delete);
+router.get("/:id/delete", controllerUser.delete);
 
-router.get("/:userId/update", controllerUser.getUpdate);
+router.get("/:id/update", controllerUser.getUpdate);
 
 router.get("/profile", controllerUser.profile);
 

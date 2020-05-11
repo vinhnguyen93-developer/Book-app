@@ -8,11 +8,11 @@ block content
       lable User name:
       select.form-control(name="userId")
         each user in users
-          option(value=user.userId) #{user.name}
+          option(value=user.id) #{user.name}
     .form-group
       lable Book title:
       select.form-control(name="bookId")
         each book in books
-          option(value=book.bookId) #{book.title}
+          option(value=book.id) #{book.title}
 
     button.btn.btn-primary create

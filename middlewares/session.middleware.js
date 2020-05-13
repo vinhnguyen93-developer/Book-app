@@ -10,8 +10,9 @@ module.exports = async function(req, res, next) {
     });
     
     await Session.create({
-      sessionId: sessionId
-    })
+      ss_id: sessionId,
+      cart: {}
+    });
   }
   
   next();

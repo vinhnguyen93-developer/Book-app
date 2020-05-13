@@ -2,6 +2,7 @@ var cloudinary = require('cloudinary').v2;
 
 var Book = require('../models/book.model');
 var User = require('../models/user.model');
+var Session = require('../models/session.model');
 
 cloudinary.config({ 
   cloud_name: process.env.CLOUND_NAME, 
@@ -21,12 +22,16 @@ module.exports.index = async function(req, res) {
   
   var user = await User.findById(id);
 
-  //var data = db.get('sessions').find({ id: req.signedCookies.sessionId}).get('cart').value();
+  var data = await Session.findOne({ ss_id: req.signedCookies.sessionId });
   
-  // if (data) {
-  //   res.locals.count = Object.values(data).reduce((sum, item) => sum + item, 0);
-  // }
-  
+  if (data) {
+    var count = 0;
+    for(var i = 1; i < data.cart.length; i++) {
+      count += data.cart[i].quantity;
+    }
+    res.locals.count = count;
+  }
+
   res.render('books/index', {
     books: books.slice(start, end),
     page,

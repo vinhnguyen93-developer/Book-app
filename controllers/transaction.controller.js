@@ -4,7 +4,11 @@ var User = require('../models/user.model');
 var Book = require('../models/book.model');
 
 module.exports.index = async function(req, res) {
-  var data = await Transaction.find({ userId: req.signedCookies.userId });
+  var data = await Transaction
+  .find({ userId: req.signedCookies.userId })
+  .populate({path: 'userId', select: 'name'})
+  .populate({path: 'bookId', select: 'title'});;
+
   var dataUser = await User.findById(req.signedCookies.userId);
   
   //pagintion
@@ -28,25 +32,19 @@ module.exports.index = async function(req, res) {
   
   //if dataUser === true 
   if (dataUser.isAdmin === true) {
-    if (dataUser.userId === req.signedCookies.userId) {
-      var datas = await Transaction.find();
-      var transactions = datas.map(async function (item) {
-        if (item.hasOwnProperty('userId') && item.hasOwnProperty('bookId')) {
-          var user = await User.findOne({ id: item.userId });
-          var book = await Book.findOne({ id: item.bookId });
+    if (dataUser.id === req.signedCookies.userId) {
+      var datas = await Transaction
+      .find()
+      .populate({path: 'userId', select: 'name'})
+      .populate({path: 'bookId', select: 'title'});
 
-          if (user && book) {
-            return {
-              user: user.name,
-              book: book.title,
-              tranId: item.id,
-              isComplete: item.isComplete
-            };
-          } else {
-            return {};
-          }
-
-        }
+      var transactions = datas.map(function (item) {
+        return {
+          user: item.userId.name,
+          book: item.bookId.title,
+          tranId: item.id,
+          isComplete: item.isComplete
+        };
       });
       
       transactions = transactions.slice(start, end);
@@ -61,17 +59,13 @@ module.exports.index = async function(req, res) {
     }
   }
   
-  var transactions = data.map(async function(item) {
-    if(item.hasOwnProperty('userId') && item.hasOwnProperty('bookId')) {
-      var user = await User.findById(item.userId);
-      var book = await Book.findById(item.bookId);
-      return {
-        user: user.name,
-        book: book.title,
-        tranId: item.id,
-        isComplete: item.isComplete
-      };
-    }
+  var transactions = data.map(function(item) {
+    return {
+      user: item.userId.name,
+      book: item.bookId.title,
+      tranId: item.id,
+      isComplete: item.isComplete
+    };
   });
   
   transactions = transactions.slice(start, end);
@@ -122,7 +116,7 @@ module.exports.postCreate = async function(req, res) {
     });
   }
 
-  res.redirect("back");
+  res.redirect("/transactions");
 };
 
 module.exports.complete = async function(req, res) {

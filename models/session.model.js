@@ -2,12 +2,8 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var sessionSchema = new Schema({
-  cart: [
-    { 
-      bookId: { type: Schema.Types.ObjectId, ref: 'Book'},
-      count: Number
-    }
-  ]
+  ss_id: String,
+  cart:  Array 
 });
 
 var Session = mongoose.model('Session', sessionSchema, 'sessions');

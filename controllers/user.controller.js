@@ -72,7 +72,7 @@ module.exports.profile = function(req, res) {
 module.exports.getUpdate = async function(req, res) {
 	var id = req.params.id;
 
-	var user = await User.findOne({ id: id });
+	var user = await User.findById(id);
 
 	res.render('users/update', {
 		user: user,

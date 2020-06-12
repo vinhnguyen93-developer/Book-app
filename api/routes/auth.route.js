@@ -1,6 +1,6 @@
 var express = require('express');
 
-var controller = require('../../api/controllers/auth.controller');
+var controller = require('../controllers/auth.controller');
 
 var router = express.Router();
 

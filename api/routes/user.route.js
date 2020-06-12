@@ -1,7 +1,7 @@
 var express = require("express");
 var multer = require("multer");
 
-var controllerUser = require("../../api/controllers/user.controller");
+var controllerUser = require("../controllers/user.controller");
 var validate = require("../../validate/user.validate");
 
 var upload = multer({ dest: "uploads/" });

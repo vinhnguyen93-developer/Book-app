@@ -21,8 +21,7 @@ module.exports.postCreate = async function(req, res) {
     wrongLoginCount: 0,
     name: req.body.name,
     email: req.body.email,
-    isAdmin: req.body.isAdmin,
-    avatar: 'https://res.cloudinary.com/vinhnguyen93/image/upload/w_1000,ar_1:1,c_fill,g_auto,e_art:hokusai/v1588557922/samples/bike.jpg'
+    profilePictureUrl: 'https://res.cloudinary.com/vinhnguyen93/image/upload/w_1000,ar_1:1,c_fill,g_auto,e_art:hokusai/v1588557922/samples/bike.jpg'
   });
   res.json(user);
 };

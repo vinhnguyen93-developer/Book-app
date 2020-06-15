@@ -14,7 +14,6 @@ var cors = require('cors');
 mongoose.set("useUnifiedTopology", true);
 mongoose.connect(process.env.MONGO_URL, {useNewUrlParser: true});
 
-var apiAuthRoute = require('./api/routes/auth.route');
 var apiComment = require('./api/routes/comment.route');
 var apiUser = require('./api/routes/user.route');
 var apiPost = require('./api/routes/post.route');
@@ -30,7 +29,6 @@ app.set('views', './views');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use('/api/auth', apiAuthRoute);
 app.use('/api/comments', apiComment);
 app.use('/api/users', apiUser);
 app.use('/api/posts', apiPost);

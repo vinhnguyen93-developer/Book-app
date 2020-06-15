@@ -15,6 +15,10 @@ module.exports.index = async function(req, res) {
 };
 
 module.exports.postCreate = async function(req, res) {
+  
+  var file = await cloudinary.uploader.upload(req.file.path, (error, result)  => {
+    console.log(result, error)
+  });
   var post = await Post.create(req.body);
   res.json(post);
 };

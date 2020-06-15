@@ -1,5 +1,6 @@
 var bcrypt = require('bcrypt');
 var cloudinary = require('cloudinary').v2;
+var jwt = require('jsonwebtoken');
 
 var User = require('../../models/user.model');
 
@@ -9,22 +10,66 @@ cloudinary.config({
   api_secret: process.env.API_SECRET 
 });
 
-module.exports.index = async function(req, res) {
-  var users = await User.find();
-  res.json(users);
+module.exports.index = (req, res) => {
+  var decoded = jwt.verify(req.headers['authorization'], process.env.SECRET_KEY);
+
+  User.findOne({
+    _id: decoded._id
+  })
+  .then(user => {
+    if(user) {
+      res.json(user);
+    } else {
+      res.send("User does not exist");
+    }
+  })
+  .catch(err => {
+    res.send('error: ' + err);
+  })
 };
 
 module.exports.postCreate = async function(req, res) {
-  var hash = bcrypt.hashSync('123123', 5);
+  var hash = bcrypt.hashSync(req.body.password, 10);
   var user = await User.create({
     password: hash,
-    wrongLoginCount: 0,
+    wrongLoginCount: req.body.wrongLoginCount,
     name: req.body.name,
     email: req.body.email,
-    profilePictureUrl: 'https://res.cloudinary.com/vinhnguyen93/image/upload/w_1000,ar_1:1,c_fill,g_auto,e_art:hokusai/v1588557922/samples/bike.jpg'
+    profilePictureUrl: req.body.profilePictureUrl
   });
   res.json(user);
 };
+
+module.exports.postLogin = (req, res) => {
+  User.findOne({
+    email: req.body.email
+  })
+  .then(user => {
+    if(user) {
+      if(bcrypt.compareSync(req.body.password, user.password)) {
+        const payload = {
+          _id: user._id,
+          name: user.name,
+          email: user.email,
+          profilePictureUrl: user.profilePictureUrl
+        }
+
+        let token = jwt.sign(payload, process.env.SECRET_KEY, {
+          expiresIn: 1440
+        });
+
+        res.send(token);
+      } else {
+        res.json({error: "User does not exist"});
+      }
+    } else {
+      res.json({error: "User does not exist"});
+    }
+  })
+  .catch(err => {
+    res.send('Error: ' + err);
+  })
+}
 
 module.exports.delete = async function(req, res) {
   var id = req.params.id;

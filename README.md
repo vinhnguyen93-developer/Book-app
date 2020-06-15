@@ -1,30 +1,25 @@
-# hello-express
+## api-server-instagram-clone
 
-A server that serves a webpage, its resources, and some data
-
-
-## Your Project
-
-On the front-end,
-
-- Edit `views/index.html` to change the content of the webpage
-- `public/client.js` is the javacript that runs when you load the webpage
-- `public/style.css` is the styles for `views/index.html`
-- Drag in `assets`, like images or music, to add them to your project
-
-On the back-end,
-
-- your app starts at `server.js`
-- add frameworks and packages in `package.json`
-- safely store app secrets in `.env` (nobody can see this but you and people you invite)
-
-Click `Show` in the header to see your app live. Updates to your code will instantly deploy.
-
-
-## Made by [Glitch](https://glitch.com/)
-
-**Glitch** is the friendly community where you'll build the app of your dreams. Glitch lets you instantly create, remix, edit, and host an app, bot or site, and you can invite collaborators or helpers to simultaneously edit code with you.
-
-Find out more [about Glitch](https://glitch.com/about).
-
-( ᵔ ᴥ ᵔ )
+## Usage
+1. Fork the repo and then clone it or download it.
+2. First install all dependencies:
+	```
+		# with npm
+		npm install
+		# or with yarn
+		yarn
+	```
+3. Create a `.env` file and insert the following code. Replace values with yours!!
+	
+	SESSION_SECRET="anything"
+	SENDGRID_API_KEY="email-verification-link"
+	CLOUND_NAME="your account clound library image"
+	API_KEY="your api key"
+	API_SECRET="your api secret"
+	MONGO_URL="your mongodb"
+	SECRET_KEY="anything"
+	
+4. Start the server
+	```
+		npm start [OR] yarn start
+	```
